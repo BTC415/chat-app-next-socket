@@ -29,7 +29,7 @@ git clone <this-repo-name>
 
   ```bash
   cd client && npm install
-  cd..
+  cd ..
   cd server && npm install
   ```
 	- Installs all the dependencies required by the project.
@@ -65,3 +65,12 @@ git clone <this-repo-name>
   git commit -m "<COMMIT-MESSAGE>"
   git push origin <NAME-OF-THE-BRANCH>
   ```
+## Description
+We have all encountered chat over the web, that can be Facebook, Instagram, Whatsapp and the list goes on.
+Just to give a bit of context, you send a message to a person or a group, they see the message and reply back. Simple yet complex.
+
+To develop a chat app you would need to be aware of new messages as soon as they arrive.
+Usually, to get information from the server you need send an HTTP request. With websockets, the server lets you know when there is new information without asking it.
+
+In this project, we leveraged the real-time communication provided by Socket.io to create an open chat application that allows users to send and receive messages from several users on the application. 
+You will also learn how to detect the users who are online and when a user is typing.
