@@ -1,25 +1,49 @@
 'use client'
-import { useEffect } from 'react';  
-import socketIO, { Socket } from 'socket.io-client';  
-import styles from "./page.module.css";  
+import React, { useState, useEffect, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import {io, Socket } from 'socket.io-client';
 
-const socket: typeof Socket = socketIO.connect('http://localhost:4000');  
+const socket: typeof Socket = io.connect('http://localhost:4000');
 
-export default function Home() {  
-  useEffect(() => {  
-    // Example use of the socket  
-    socket.on('connect', () => {  
-      console.log('Connected to server');  
-    });  
+const Home: React.FC = () => {
+  const router = useRouter()
 
-    return () => {  
-      socket.disconnect();  
-    };  
-  }, []);  
+  const [userName, setUserName] = useState<string>('')
 
-  return (  
-    <div>  
-      <p>Hello World!</p>  
-    </div>  
-  );  
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    localStorage.setItem('userName', userName);
+    socket.emit('newUser', { userName, socketID: socket.id })
+    router.push('/chat')
+  }
+
+  // useEffect(() => {
+  //   // Example use of the socket  
+  //   socket.on('connect', () => {
+  //     console.log('Connected to server');
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
+
+  return (
+    <form className='home_container' onSubmit={handleSubmit}>
+      <h2 className="home__header">Sign in to Open Chat</h2>
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        minLength={6}
+        name="username"
+        id="username"
+        className="username__input"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+      />
+      <button className="home__cta">SIGN IN</button>
+    </form>
+  );
 }
+
+export default Home
