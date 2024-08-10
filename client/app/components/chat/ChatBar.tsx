@@ -26,12 +26,12 @@ const ChatBar: React.FC<ChatBarProps> = ({ socket }) => {
   }, [socket])
 
   return (
-    <div className="chat__sidebar">
+    <div className=" h-full bg-[#f9f5eb] flex-1 p-5 border-r border-[#fdfdfd]">
       <h2>Open Chat</h2>
 
       <div>
-        <h4 className="chat__header">ACTIVE USERS</h4>
-        <div className="chat__users">
+        <h4 className="my-7.5">ACTIVE USERS</h4>
+        <div className="mb-2.5 text-[#607eaa] text-sm">
           {users.map((user) => (
             <p key={user.socketID}>{user.userName}</p>
           ))}

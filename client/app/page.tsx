@@ -25,19 +25,19 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <form className='home_container' onSubmit={handleSubmit}>
-        <h2 className="home__header">Sign in to Open Chat</h2>
+      <form className='w-full h-screen flex flex-col justify-center items-center' onSubmit={handleSubmit}>
+        <h2 className="mb-7.5">Sign in to Open Chat</h2>
         <label htmlFor="username">Username</label>
         <input
           type="text"
           minLength={6}
           name="username"
           id="username"
-          className="username__input"
+          className="p-2.5 w-1/2"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
         />
-        <button className="home__cta">SIGN IN</button>
+        <button className="w-48 p-2.5 text-base cursor-pointer bg-[#607eaa] text-[#f9f5eb] outline-none border-none rounded">SIGN IN</button>
       </form>
       {error && <p>{error}</p>}
     </div>

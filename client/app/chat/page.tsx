@@ -36,13 +36,14 @@ const Chat: React.FC = () => {
   }, [socket]); // Only run this effect when socket changes  
 
   useEffect(() => {
+    // 👇️ scroll to bottom every time messages change
     lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
-    <div className='chat'>
+    <div className='w-full h-screen flex items-center'>
       <ChatBar socket={socket} />
-      <div className='chat_main'>
+      <div className='h-full flex-4'>
         <ChatBody messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef} />
         <ChatFooter socket={socket} />
       </div>
