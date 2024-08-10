@@ -21,23 +21,22 @@ const ChatFooter: React.FC<ChatFooterProps> = ({ socket }) => {
     setMessage('');
   };
 
-  const handleTyping = () => {
-    const userName = localStorage.getItem('userName')
-    socket.emit('typing', `${userName} is typing`)
-  }
+  const handleTyping = () =>
+    socket.emit('typing', `${localStorage.getItem('userName')} is typing`)
+
 
   return (
     <div className="p-2.5 bg-[#f9f5eb] h-[10vh]">
-      <form className="w-full h-full flex items-center justify-between" onSubmit={handleSendMessage}>
+      <form className="mx-auto w-full h-full flex items-center justify-between" onSubmit={handleSendMessage}>
         <input
           type="text"
           placeholder="Write message"
-          className="w-4/5 h-full rounded-lg border border-[#ddd] outline-none p-3.5"
+          className="w-10/12 rounded-lg border border-[#ddd] outline-none p-3.5"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleTyping}
         />
-        <button className="w-36 bg-green-600 p-2.5 border-none outline-none text-[#eae3d2] cursor-pointer hover:bg-[rgb(129,201,129)]">SEND</button>
+        <button className="px-6 bg-green-600 p-2.5 border-none outline-none text-[#eae3d2] cursor-pointer hover:bg-[rgb(129,201,129)] rounded-md">SEND</button>
       </form>
     </div>
   );

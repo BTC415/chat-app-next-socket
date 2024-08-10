@@ -19,7 +19,6 @@ interface User {
   socketID: string;
   name: string;
 }
-
 let users: User[] = [];
 
 socketIO.on('connection', (socket: Socket) => {
@@ -28,7 +27,7 @@ socketIO.on('connection', (socket: Socket) => {
   socket.on('message', (data) => {
     socketIO.emit('messageResponse', data)
   })
-  
+
   socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data))
 
   socket.on('newUser', (data) => {

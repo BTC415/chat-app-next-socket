@@ -9,31 +9,38 @@ import ChatFooter from '../components/chat/ChatFooter'
 const socket: typeof Socket = io.connect('http://localhost:4000');
 
 const Chat: React.FC = () => {
-  const [messages, setMessages] = useState<any[]>([])
+  const [messages, setMessages] = useState<string[]>([])
   const [typingStatus, setTypingStatus] = useState<string>('')
-  const messagesRef = useRef(messages);
+  // const messagesRef = useRef(messages);
   const lastMessageRef = useRef(null);
 
 
+  // useEffect(() => {
+  //   messagesRef.current = messages; // Keep the ref updated  
+
+  //   const handleMessageResponse = (data: string) => {
+  //     setMessages((prevMessages) => [...prevMessages, data]);
+  //   };
+
+  //   // Check if socket is defined before attaching listener  
+  //   if (socket) {
+  //     socket.on('messageResponse', handleMessageResponse);
+  //   }
+
+  //   // Cleanup on unmount or when socket changes  
+  //   return () => {
+  //     if (socket) {
+  //       socket.off('messageResponse', handleMessageResponse);
+  //     }
+  //   };
+  // }, [socket]); // Only run this effect when socket changes  
   useEffect(() => {
-    messagesRef.current = messages; // Keep the ref updated  
+    socket.on('messageResponse', (data: string) => setMessages([...messages, data]));
+  }, [socket, messages]);
 
-    const handleMessageResponse = (data: any) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
-    };
-
-    // Check if socket is defined before attaching listener  
-    if (socket) {
-      socket.on('messageResponse', handleMessageResponse);
-    }
-
-    // Cleanup on unmount or when socket changes  
-    return () => {
-      if (socket) {
-        socket.off('messageResponse', handleMessageResponse);
-      }
-    };
-  }, [socket]); // Only run this effect when socket changes  
+  useEffect(() => {
+    socket.on('typingResponse', (data: string) => setTypingStatus(data));
+  }, [socket]);
 
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
@@ -43,7 +50,7 @@ const Chat: React.FC = () => {
   return (
     <div className='w-full h-screen flex items-center'>
       <ChatBar socket={socket} />
-      <div className='h-full flex-4'>
+      <div className='h-full w-full md:w-3/4'>
         <ChatBody messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef} />
         <ChatFooter socket={socket} />
       </div>
