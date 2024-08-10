@@ -1,15 +1,14 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
-import { Socket } from 'socket.io-client'
+import io, { Socket } from 'socket.io-client';
 import ChatBar from '../components/chat/ChatBar'
 import ChatBody from '../components/chat/ChatBody'
 import ChatFooter from '../components/chat/ChatFooter'
 
-interface ChatProps {
-  socket: typeof Socket
-}
 
-const Chat: React.FC<ChatProps> = ({ socket }) => {
+const socket: typeof Socket = io.connect('http://localhost:4000');
+
+const Chat: React.FC = () => {
   const [messages, setMessages] = useState<any[]>([])
   const [typingStatus, setTypingStatus] = useState<string>('')
   const messagesRef = useRef(messages);
